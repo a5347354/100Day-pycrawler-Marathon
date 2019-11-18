@@ -105,3 +105,4 @@ venv.bak/
 
 # cypress
 cypress/node_modules
+*.DS_Store
