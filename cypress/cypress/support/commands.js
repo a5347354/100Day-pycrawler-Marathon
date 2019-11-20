@@ -24,6 +24,8 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
+require('cypress-downloadfile/lib/downloadFileCommand')
+
 Cypress.Commands.add('downloadPdf', (url, directory) => {
     return cy.getCookies().then(cookies => {
         return cy.task('downloadPdf', {url: url, directory: directory, cookies: cookies });
