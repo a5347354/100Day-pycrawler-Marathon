@@ -2,7 +2,7 @@
 /// <reference types="cypress-downloadfile"/>
 
 var text 
-const day = 1
+const day = 3
 
 context('Actions', () => {
 
@@ -38,6 +38,7 @@ context('Actions', () => {
     page = page.substring(page.length-3, page.length)
     //下載ipynb file
     cy.visit('https://pycrawler.cupoy.com/mission/D'+day)
+    cy.wait(2000)
     cy.get('h2').should(($h2)=>{
       text = $h2.text()
       // text = text.replace(/[\u3002|\uff1f|\uff01|\uff0c|\u3001|\uff1b|\uff1a|\u201c|\u201d|\u2018|\u2019|\uff08|\uff09|\u300a|\u300b|\u3008|\u3009|\u3010|\u3011|\u300e|\u300f|\u300c|\u300d|\ufe43|\ufe44|\u3014|\u3015|\u2026|\u2014|\uff5e|\ufe4f|\uffe5]/,"_");
@@ -54,8 +55,8 @@ context('Actions', () => {
     cy.get('.rc-dialog-body').contains(/^登入$/).click()
     cy.wait(2000)
 
-    var page = 2
-    cy.visit('https://pycrawler.cupoy.com/mission/D'+page)
+    // var page = 2
+    cy.visit('https://pycrawler.cupoy.com/mission/D'+day)
     cy.wait(10000)
     var text
     cy.get('h2').should(($h2)=>{
@@ -64,22 +65,10 @@ context('Actions', () => {
     })
     cy.contains('下載')
       .invoke('attr', 'href')
-      .then( async(href) => {
+      .then( (href) => {
         cy.clearCookies()
-        await cy.downloadFile('https://pycrawler-fileentity.cupoy.com/1st/dailytask/D'+page+'/__PDF__?t=1573820109090' ,'../HomeWork/'+text,text+'.pdf');;
+        cy.downloadFile('https:'+href ,'../HomeWork/'+text, text+'.pdf');;
       })
       .should('have.length',3)
-
-    // let page = "000" + day
-    // page = page.substring(page.length-3, page.length)
-    // //下載ipynb file
-    // cy.visit('https://pycrawler.cupoy.com/mission/D'+day)
-    
-    // cy.get('h2').should(($h2)=>{
-    //   text = $h2.text()
-    //   // text = text.replace(/[\u3002|\uff1f|\uff01|\uff0c|\u3001|\uff1b|\uff1a|\u201c|\u201d|\u2018|\u2019|\uff08|\uff09|\u300a|\u300b|\u3008|\u3009|\u3010|\u3011|\u300e|\u300f|\u300c|\u300d|\ufe43|\ufe44|\u3014|\u3015|\u2026|\u2014|\uff5e|\ufe4f|\uffe5]/,"_");
-    //   text = text.replace(/[\uff1a_]/g,"_");
-    //   cy.downloadFile('https://pycrawler-fileentity.cupoy.com/1st/dailytask/D'+page+'/__PDF__?t=1573820109090' ,'../HomeWork/'+text,text+'.pdf');
-    // })
   })
 })
