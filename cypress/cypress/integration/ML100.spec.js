@@ -2,7 +2,7 @@
 /// <reference types="cypress-downloadfile"/>
 
 var text 
-const day = 3
+const day = 4
 
 context('Actions', () => {
 
@@ -66,7 +66,8 @@ context('Actions', () => {
     cy.contains('下載')
       .invoke('attr', 'href')
       .then( (href) => {
-        cy.clearCookies()
+        console.log('https:'+href )
+        // cy.clearCookies()
         cy.downloadFile('https:'+href ,'../HomeWork/'+text, text+'.pdf');;
       })
       .should('have.length',3)
